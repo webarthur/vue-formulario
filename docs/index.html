@@ -8,6 +8,10 @@
   <title>Vue Formulario</title>
 
   <script src="https://unpkg.com/vue@3"></script>
+
+  <!-- Tests for dev -->
+  <!-- <script src="../dist/vue-formulario.umd.js"></script> -->
+  
   <script src="https://unpkg.com/vue-formulario"></script>
 
 </head>
@@ -182,7 +186,7 @@
             },
             username: {
               type: 'string',
-              match: [/^[a-z\d]*$/, 'Type only characterers and numbers '],
+              match: [/^[a-z\d]*$/, 'Type only characters and numbers '],
               required: [true, 'Your username is required.']
             },
             email: {

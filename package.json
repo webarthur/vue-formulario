@@ -1,6 +1,6 @@
 {
   "name": "vue-formulario",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "files": ["dist"],
   "main": "./dist/vue-formulario.umd.js",
   "module": "./dist/vue-formulario.es.js",

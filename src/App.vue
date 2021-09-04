@@ -26,7 +26,7 @@ const form = ref(createForm({
     },
     username: {
       type: 'string',
-      match: [/^[a-z\d]*$/, 'Type only characterers and numbers '],
+      match: [/^[a-z\d]*$/, 'Type only characters and numbers '],
       required: [true, 'Your username is required.']
     },
     email: {
