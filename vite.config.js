@@ -8,7 +8,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, 'main.js'),
-      name: 'Formulario',
+      name: 'VueFormulario',
       fileName: (format) => `vue-formulario.${format}.js`
     },
     rollupOptions: {
