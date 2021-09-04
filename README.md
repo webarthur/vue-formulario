@@ -22,6 +22,7 @@ $ npm install vue-formulario
 <script src="https://unpkg.com/vue"></script>
 <script src="https://unpkg.com/vue-formulario"></script>
 <script>
+  const { Formulario, Validation, createForm } = VueFormulario
   const app = Vue.createApp({
     data () {
       return {
