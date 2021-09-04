@@ -50,7 +50,9 @@ export default {
     // Save validation component references here
     const errors = ref({})
 
-    function validation () {
+    function validateForm () {
+
+      console.log('ha!')
       
       // Reset errors
       for (const field of Object.keys(schema)) {
@@ -75,7 +77,7 @@ export default {
     }
     
     return {
-      data, schema, status, childRefs, isFormulario
+      data, schema, status, childRefs, isFormulario, validateForm
     }
   }
   
@@ -83,7 +85,7 @@ export default {
 </script>
 
 <template>
-  <form @submit="validation">
+  <form @submit="validateForm">
     <slot />
   </form>
 </template>
