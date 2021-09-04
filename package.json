@@ -1,0 +1,32 @@
+{
+  "name": "vue-formulario",
+  "version": "1.0.0",
+  "files": ["dist"],
+  "main": "./dist/vue-formulario.umd.js",
+  "module": "./dist/vue-formulario.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vue-formulario.es.js",
+      "require": "./dist/vue-formulario.umd.js"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webarthur/vue-formulario.git"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "is-my-json-valid": "^2.20.5",
+    "vue": "^3.2.6"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^1.6.0",
+    "@vue/compiler-sfc": "^3.2.6",
+    "vite": "^2.5.2"
+  },
+  "author": "Arthur Ronconi <webarthur@gmail.com> (https://devarthur.com)"
+}
