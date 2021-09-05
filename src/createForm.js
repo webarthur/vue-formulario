@@ -11,6 +11,8 @@ export default function (settings) {
     
     refs: {},
 
+    childRefs: {},
+
     loading: false,
     
     // dirty: false,
@@ -23,9 +25,13 @@ export default function (settings) {
 
     },
 
-    addError (field, message) {
-      this.data[field].error = message
-      console.warn(field + ':', message);
+    addError (path, message) {
+      this.childRefs[path] = {
+        message,
+        path,
+        kind: 'custom'
+      }
+      console.warn(path + ':', message);
     },
 
     validate () {
