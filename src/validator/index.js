@@ -88,7 +88,7 @@ validate.types = {
     test: (type) => type === String || typeof type === 'string' && type.toLowerCase() === 'string',
     keywords: {
       required: v => (v instanceof String || typeof v === 'string') && v.length,
-      type: (v, value) => (v instanceof String || typeof v === 'string'),
+      type: (v, value) => (v instanceof String || typeof v === 'string' || typeof v === 'undefined'),
       maxlength: (v, value) => v === null || v.length <= value,
       minlength: (v, value) => v === null || v.length >= value,
       match: (v, re) => !re || ((v != null && v !== '') ? re.test(v) : true),
@@ -98,7 +98,7 @@ validate.types = {
   },
 
   Number: {
-    test: (type) => type === Number || typeof type === 'number' && type.toLowerCase() === 'number',
+    test: (type) => type === Number || typeof type === 'string' && type.toLowerCase() === 'number',
     keywords: {
       required: v => (v instanceof Number || typeof v === 'number'),
       min: (v, value) => v === null || v >= value,
@@ -108,16 +108,16 @@ validate.types = {
   },
 
   Array: {
-    test: (type) => type === Array || typeof type === 'array' && type.toLowerCase() === 'array',
+    test: (type) => type === Array || typeof type === 'string' && type.toLowerCase() === 'array',
     keywords: {
-      // required: v => (v instanceof Array || typeof v === 'number'),
+      required: v => (v instanceof Array || Array.isArray(v)) && v.length > 0,
       // min: (v, value) => v === null || v >= value,
       // max: (v, value) => v === null || v <= value,
     }
   },
 
   Date: {
-    test: (type) => type === Date || typeof type === 'date' && type.toLowerCase() === 'date',
+    test: (type) => type === Date || typeof type === 'string' && type.toLowerCase() === 'date',
     keywords: {
       required: v => (v instanceof Date),
       // min: (v, value) => v === null || v >= value,
