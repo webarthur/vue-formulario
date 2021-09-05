@@ -67,6 +67,10 @@ validate.addKeyword = function (keyword, type, fn) {
   validate.types[type][keyword] = fn
 }
 
+validate.addFormat = function (name, re) {
+  validate.formats[name] = re
+}
+
 validate.getErrorMessage = function (type, kind, path, value, setup) {
   const message = setup[1] || messages[type][kind] || messages.general[kind] || messages.general.default
   return message
