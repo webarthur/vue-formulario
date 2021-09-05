@@ -63,6 +63,10 @@ const validate = function (schema, data) {
 validate.messages = messages
 validate.formats = formats
 
+validate.addKeyword = function (keyword, type, fn) {
+  validate.types[type][keyword] = fn
+}
+
 validate.getErrorMessage = function (type, kind, path, value, setup) {
   const message = setup[1] || messages[type][kind] || messages.general[kind] || messages.general.default
   return message
