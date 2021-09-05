@@ -9,7 +9,7 @@ export default {
     data: Object,
     schema: Object,
     // settings: Object,
-    status: Object,
+    // status: Object,
     modelValue: Object,
     isFormulario: Boolean,
   },
@@ -30,7 +30,7 @@ export default {
     if (props.modelValue) {
       data = props.modelValue.data
       schema = props.modelValue.schema
-      status = props.modelValue.status
+      // status = props.modelValue.status
     }
     else {
       // setup = createForm({
@@ -40,20 +40,18 @@ export default {
       // })
       data = props.data
       schema = props.schema
-      status = props.status
+      // status = props.status
     }
 
-    const childRefs = {}
+    const childRefs = props.modelValue.childRefs = {}
 
     const isFormulario = true
 
     // Save validation component references here
-    const errors = ref({})
+    // const errors = ref({})
 
     function validateForm () {
 
-      console.log('ha!')
-      
       // Reset errors
       for (const field of Object.keys(schema)) {
         // Check if the <Validation> component has created
@@ -77,7 +75,8 @@ export default {
     }
     
     return {
-      data, schema, status, childRefs, isFormulario, validateForm
+      data, schema, childRefs, isFormulario, validateForm
+      // , status
     }
   }
   

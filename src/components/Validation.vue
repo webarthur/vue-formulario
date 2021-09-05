@@ -41,7 +41,7 @@ function validate () {
 
 // Validate on input when has an error
 function inputValidate () {
-  if (error.value && error.value.message) {
+  if (error.value && error.value.message && !Array.isArray(Formulario.data[fieldName])) {
     validate()
   }
 }

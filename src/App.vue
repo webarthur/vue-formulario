@@ -13,7 +13,9 @@ const form = ref(createForm({
     username: '',
     email: '',
     country: '',
-    zip: null,
+    age: 12,
+    profession: '',
+    knowledge: []
   },
   schema: {
     firstName: {
@@ -33,6 +35,24 @@ const form = ref(createForm({
       type: 'string',
       format: ['email', 'The email format is invalid.'],
       required: [true, 'Your email is required.']
+    },
+    age: {
+      type: 'number',
+      min: [1, 'You need to be older'],
+      max: [120, 'You can\'t be that old.'],
+      required: [true, 'Your age is required.']
+    },
+    profession: {
+      type: 'string',
+      format: ['objectid', 'This option is invalid.'],
+      required: [true, 'Valid profession option is required.']
+    },
+    knowledge: {
+      type: 'array',
+      required: [true, 'Please, select at least one option.']
+    },
+    dynamicError: {
+      type: 'string'
     },
   }
 }))
@@ -77,38 +97,71 @@ const form = ref(createForm({
               </div>
             </Validation>
 
-            <div class="col-md-8">
-              <label for="country" class="form-label">Country</label>
-              <select class="form-select" id="country">
+            <Validation for="profession" class="col-md-8">
+              <label for="profession" class="form-label">Profession</label>
+              <select v-model="form.data.profession" class="form-select" id="profession">
                 <option value="">Choose...</option>
-                <option>Brazil</option>
-                <option>United States</option>
+                <option value="61353fcc71337b5b94a209d6">Developer</option>
+                <option value="61353fdb4bdd98ce41eb5e59">Designer</option>
+                <option value="61353fe13c56d04d8aa976d7">Engeneer</option>
+                <option value="61353fe5ef39f26ee3388784">Student</option>
+                <option value="61353fe5ef39f26ee">(Wrong ObjectID format)</option>
               </select>
               <div class="invalid-feedback">
-                Please select a valid country.
+                Please select a valid profession.
               </div>
-            </div>
+            </Validation>
 
-            <div class="col-md-4">
-              <label for="zip" class="form-label">Zip</label>
-              <input type="text" class="form-control" id="zip" placeholder="">
+            <Validation for="age" class="col-md-4">
+              <label for="age" class="form-label">Age</label>
+              <input v-model.number="form.data.age" type="number" class="form-control" id="age" placeholder="">
               <div class="invalid-feedback">
-                Zip code required.
+                Age code required.
               </div>
-            </div>
+            </Validation>
           </div>
 
           <hr class="my-4">
 
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="same-address">
-            <label class="form-check-label" for="same-address">Shipping address is the same as my billing address</label>
-          </div>
+          <Validation for="knowledge" class="row g-3">
+              
+            <div class="col-md-4">
+              <div class="form-check">
+                <input v-model="form.data.knowledge" value="HTML" type="checkbox" class="form-check-input" id="HTML">
+                <label class="form-check-label" for="HTML">HTML</label>
+              </div>
 
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="save-info">
-            <label class="form-check-label" for="save-info">Save this information for next time</label>
-          </div>
+              <div class="form-check">
+                <input v-model="form.data.knowledge" value="CSS" type="checkbox" class="form-check-input" id="CSS">
+                <label class="form-check-label" for="CSS">CSS</label>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-check">
+                <input v-model="form.data.knowledge" value="JavaScript" type="checkbox" class="form-check-input" id="JavaScript">
+                <label class="form-check-label" for="JavaScript">JavaScript</label>
+              </div>
+
+              <div class="form-check">
+                <input v-model="form.data.knowledge" value="Vue" type="checkbox" class="form-check-input" id="Vue">
+                <label class="form-check-label" for="Vue">Vue</label>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-check">
+                <input v-model="form.data.knowledge" value="Bootstrap" type="checkbox" class="form-check-input" id="Bootstrap">
+                <label class="form-check-label" for="Bootstrap">Bootstrap</label>
+              </div>
+
+              <!-- <div class="form-check">
+                <input v-model="form.data.knowledge" value="CSS" type="checkbox" class="form-check-input" id="CSS">
+                <label class="form-check-label" for="CSS">CSS</label>
+              </div> -->
+            </div>
+
+          </Validation>
 
           <hr class="my-4">
 
@@ -167,6 +220,12 @@ const form = ref(createForm({
           <hr class="my-4">
 
           <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to signup</button>
+
+          <hr class="my-4">
+
+          <Validation for="dynamicError">
+            <button @click="form.addError('dynamicError', 'Show message error!')" class="w-100 btn btn-primary btn-lg" type="button">Add dynamic error message</button>
+          </Validation>
 
         </Formulario>
 
