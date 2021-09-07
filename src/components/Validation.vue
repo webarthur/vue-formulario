@@ -17,11 +17,10 @@ if (!instance.parent.ctx.isFormulario) {
 }
 
 const Formulario = instance.parent.ctx
-// console.log(Formulario)
 
 Formulario.childRefs[fieldName] = error
 
-function validate () {
+function changeValidation () {
   const data = { [fieldName]: Formulario.data[fieldName] }
   const schema = {
     [fieldName]: Formulario.schema[fieldName]
@@ -30,17 +29,15 @@ function validate () {
   const valid = validator(schema, data)
 
   if (!valid.valid) {
-    console.log('valid.errors', valid.errors)
     error.value = valid.errors[fieldName]
   }
   else {
     error.value = {}
   }
-  console.log(Formulario.childRefs)
 }
 
 // Validate on input when has an error
-function inputValidate () {
+function inputValidation () {
   if (error.value && error.value.message && !Array.isArray(Formulario.data[fieldName])) {
     validate()
   }
@@ -48,7 +45,7 @@ function inputValidate () {
 </script>
 
 <template>
-  <div @change="validate" @input="inputValidate" :class="{ 'input-error': error.message }">
+  <div @change="changeValidation" @input="inputValidation" :class="{ 'input-error': error.message }">
     <slot />
     <div v-if="error.message" class="input-error-message">
       <small>{{error.message}}</small>

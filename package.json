@@ -1,7 +1,9 @@
 {
   "name": "vue-formulario",
-  "version": "1.0.5",
-  "files": ["dist"],
+  "version": "1.0.6",
+  "files": [
+    "dist"
+  ],
   "main": "./dist/vue-formulario.umd.js",
   "module": "./dist/vue-formulario.es.js",
   "exports": {
@@ -20,7 +22,6 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "is-my-json-valid": "^2.20.5",
     "vue": "^3.2.6"
   },
   "devDependencies": {

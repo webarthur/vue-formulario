@@ -4,65 +4,52 @@ import createForm from '../createForm'
 import validator from '../validator'
 
 export default {
-  
+
   props: {
-    data: Object,
-    schema: Object,
-    // settings: Object,
-    // status: Object,
     modelValue: Object,
     isFormulario: Boolean,
   },
 
-  setup (props) {
-    // const props = defineProps({
-    //   data: Object,
-    //   schema: Object,
-    //   // settings: Object,
-    //   status: Object,
-    //   modelValue: Object,
-    // })
+  setup (props, context) {
+    // FIX: this function is readonly
+    // if (context.attrs.onSubmit) {
+    //   const originalSubmit = context.attrs.onSubmit
+    //   context.attrs.onSubmit = async function (event, ...args) {
+    //     // Form.loading = true
+    //     // await originalSubmit(event)
+    //     // Form.loading = false
+    //   }
+    // }
 
-    let data
-    let schema
-    // let setup
+    const Form = props.modelValue
 
-    if (props.modelValue) {
-      data = props.modelValue.data
-      schema = props.modelValue.schema
-      // status = props.modelValue.status
-    }
-    else {
-      // setup = createForm({
-      //   data: props.data,
-      //   schema: props.schema,
-      //   status: props.status,
-      // })
-      data = props.data
-      schema = props.schema
-      // status = props.status
+    if (!Form) {
+      throw new Error('Formulario needs the v-model attribute')
     }
 
+    const data = Form.data
+    const schema = Form.schema
     const childRefs = props.modelValue.childRefs = {}
-
     const isFormulario = true
 
-    // Save validation component references here
-    // const errors = ref({})
-
-    function validateForm () {
-
+    /**
+     * Function to validate form
+     * @param {object} e
+     */
+    async function validateForm (e) {
       // Reset errors
-      for (const field of Object.keys(schema)) {
-        // Check if the <Validation> component has created
-        if (!childRefs[field]) {
-          continue
-        }
-        childRefs[field].value = {}
-      }
+      // for (const field of Object.keys(schema)) {
+      //   // Check if the <Validation> component has created
+      //   if (!childRefs[field]) {
+      //     continue
+      //   }
+      //   childRefs[field].value = {}
+      // }
+
+      Form.valid = true
+      Form.resetErrors()
 
       const valid = validator(schema, data)
-      // console.log('> valid', valid.errors)
 
       // Add error message to the <Validation> component
       for (const field of Object.keys(valid.errors)) {
@@ -70,21 +57,40 @@ export default {
         if (!childRefs[field]) {
           continue
         }
-      childRefs[field].value = valid.errors[field]
+        Form.valid = false
+        childRefs[field].value = valid.errors[field]
+      }
+
+      // Trigger onSubmit function to work with loading variable
+      if (Form.valid && Form.onSubmit) {
+        Form.loading = true
+        try {
+          await Form.onSubmit()
+        }
+        catch (e) {
+          Form.errorHandler(e)
+        }
+        Form.loading = false
       }
     }
-    
+
+    /**
+     * Function to dirty form
+     */
+    function dirtyForm () {
+      Form.dirty = true
+    }
+
     return {
-      data, schema, childRefs, isFormulario, validateForm
-      // , status
+      data, schema, childRefs, isFormulario, validateForm, dirtyForm
     }
   }
-  
+
 }
 </script>
 
 <template>
-  <form @submit="validateForm">
+  <form @submit.prevent="validateForm" @change="dirtyForm">
     <slot />
   </form>
 </template>

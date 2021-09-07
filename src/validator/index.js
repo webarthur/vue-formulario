@@ -27,7 +27,7 @@ const validate = function (schema, data) {
     const type = validate.getType(schema[path].type)
     const value = data[path]
 
-    console.log('validate', path, type, value)
+    // console.log('validate', path, type, value)
 
     if (type) {
       // For each key of schema entry

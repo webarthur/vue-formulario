@@ -7,6 +7,7 @@ import Validation from './components/Validation.vue'
 import createForm from './createForm.js'
 
 const form = ref(createForm({
+
   data: {
     firstName: '',
     lastName: '',
@@ -17,6 +18,7 @@ const form = ref(createForm({
     profession: '',
     knowledge: []
   },
+
   schema: {
     firstName: {
       type: 'string',
@@ -54,7 +56,16 @@ const form = ref(createForm({
     dynamicError: {
       type: 'string'
     },
+  },
+
+  async onSubmit () {
+    console.log('Sending form...')
+
+    // await a second to simulate a request
+    await new Promise(resolve => setTimeout(x=>resolve(1), 1000))
   }
+
+
 }))
 </script>
 
@@ -65,9 +76,11 @@ const form = ref(createForm({
 
         <h1>Vue Formulario</h1>
         <p>Here you can test the validation with Formulario.</p>
-        
-        <Formulario @submit.prevent v-model="form">
+
+        <Formulario v-model="form">
+
           <div class="row g-3">
+
             <Validation for="firstName" class="col-sm-6">
               <label for="firstName" class="form-label">First name</label>
               <input v-model="form.data.firstName" type="text" class="form-control" id="firstName" placeholder="Arthur">
@@ -119,12 +132,13 @@ const form = ref(createForm({
                 Age code required.
               </div>
             </Validation>
+            
           </div>
 
           <hr class="my-4">
 
           <Validation for="knowledge" class="row g-3">
-              
+
             <div class="col-md-4">
               <div class="form-check">
                 <input v-model="form.data.knowledge" value="HTML" type="checkbox" class="form-check-input" id="HTML">
@@ -163,11 +177,11 @@ const form = ref(createForm({
 
           </Validation>
 
-          <hr class="my-4">
+          <!-- <hr class="my-4"> -->
 
-          <h4 class="mb-3">Payment</h4>
+          <!-- <h4 class="mb-3">Payment</h4> -->
 
-          <div class="my-3">
+          <!-- <div class="my-3">
             <div class="form-check">
               <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked="">
               <label class="form-check-label" for="credit">Credit card</label>
@@ -215,23 +229,25 @@ const form = ref(createForm({
                 Security code required
               </div>
             </div>
-          </div>
+          </div> -->
 
           <hr class="my-4">
 
-          <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to signup</button>
+          <button class="w-100 btn btn-primary btn-lg" type="submit">Submit</button>
+
+          <p v-if="form.loading" class="mt-3 text-center">Loading...</p>
 
           <hr class="my-4">
 
           <Validation for="dynamicError">
-            <button @click="form.addError('dynamicError', 'Show message error!')" class="w-100 btn btn-primary btn-lg" type="button">Add dynamic error message</button>
+            <button @click="form.addError('dynamicError', 'Show message error!')" class="w-100 btn btn-secondary btn-lg" type="button">Add dynamic error message</button>
           </Validation>
 
         </Formulario>
 
       </div>
       <div class="col-md-6">
-        <div>
+        <div class="bg-light p-3 rounded small">
           <pre><code>{{form}}</code></pre>
         </div>
       </div>
@@ -241,10 +257,6 @@ const form = ref(createForm({
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  /* text-align: center; */
   color: #2c3e50;
   margin-top: 60px;
 }
