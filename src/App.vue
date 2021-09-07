@@ -2,9 +2,7 @@
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 import { ref } from 'vue'
-import Formulario from './components/Formulario.vue'
-import Validation from './components/Validation.vue'
-import createForm from './createForm.js'
+import { Formulario, Validation, createForm } from '../main'
 
 const form = ref(createForm({
 

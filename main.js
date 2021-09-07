@@ -3,9 +3,11 @@ import Validation from './src/components/Validation.vue'
 import createForm from './src/createForm.js'
 import validator from './src/validator'
 
-export default {
+export {
   Formulario,
   Validation,
   createForm,
   validator
 }
+
+// export default {}
