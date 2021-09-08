@@ -10,9 +10,9 @@
   <script src="https://unpkg.com/vue@3"></script>
 
   <!-- Tests for dev -->
-  <!-- <script src="../dist/vue-formulario.umd.js"></script> -->
+  <script src="../dist/vue-formulario.umd.js"></script>
   
-  <script src="https://unpkg.com/vue-formulario"></script>
+  <!-- <script src="https://unpkg.com/vue-formulario"></script> -->
 
   <style>
   #app {
@@ -22,7 +22,7 @@
   .input-error input,
   .input-error select,
   .input-error textarea {
-    border-color: 1px solid #dc3545;
+    border: 1px solid #dc3545;
   }
   .input-error-message {
     color: #dc3545;
@@ -281,9 +281,15 @@
           
           async onSubmit () {
             console.log('Sending form...')
-          
+            // throw new Error('Error message')
+        
             // await a second to simulate a request
-            await new Promise(resolve => setTimeout(x=>resolve(1), 1000))
+            // await new Promise((resolve, reject) => setTimeout(x => reject(1), 1000))
+            await new Promise((resolve, reject) => setTimeout(x => resolve(1), 1000))
+          },
+        
+          catch (error) {
+            console.warn('>', error)
           }
           
         })
