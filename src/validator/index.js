@@ -27,8 +27,6 @@ const validate = function (schema, data) {
     const type = validate.getType(schema[path].type)
     const value = data[path]
 
-    // console.log('validate', path, type, value)
-
     if (type) {
       // For each key of schema entry
       for (const kindKey of Object.keys(schema[path])) {
@@ -136,6 +134,10 @@ validate.types = {
       // max: (v, value) => v === null || v <= value,
     }
   },
+
+  // Object: {
+
+  // }
 
 }
 

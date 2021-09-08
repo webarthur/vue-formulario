@@ -49,17 +49,12 @@ export default function (settings) {
 
     validate () {
       const valid = validator(this.schema, this.data)
-
-      // console.log('> valid', valid.errors)
-    
       for (const field of Object.keys(valid.errors)) {
         // childRefs[field].value = valid.errors[field]
         if (this.refs[field]) {
           this.refs[field].value = valid.errors[field]
         }
       }
-    
-      // console.log('errors', errors)
     },
 
     ...settings
