@@ -55,7 +55,9 @@ function inputValidation () {
 </template>
 
 <style>
-.input-error input {
+.input-error input,
+.input-error select,
+.input-error textarea {
   border: 1px solid #dc3545;
 }
 .input-error-message {
