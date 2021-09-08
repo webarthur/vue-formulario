@@ -73,6 +73,7 @@ export default {
           }
           console.error(e)
         }
+        Form.loading = false
       }
     }
 

@@ -236,7 +236,7 @@ const form = ref(createForm({
 
           <hr class="my-4">
 
-          <button class="w-100 btn btn-primary btn-lg" type="submit">Submit</button>
+          <button class="w-100 btn btn-primary btn-lg" type="submit" :disabled="form.loading">Submit</button>
 
           <p v-if="form.loading" class="mt-3 text-center">Loading...</p>
 
