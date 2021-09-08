@@ -12,7 +12,7 @@ const form = ref(createForm({
     username: '',
     email: '',
     country: '',
-    age: 12,
+    age: '',
     profession: '',
     knowledge: []
   },
@@ -238,7 +238,7 @@ const form = ref(createForm({
 
           <button class="w-100 btn btn-primary btn-lg" type="submit" :disabled="form.loading">Submit</button>
 
-          <p v-if="form.loading" class="mt-3 text-center">Loading...</p>
+          <p v-if="form.loading" class="mt-3 text-center">Sending...</p>
 
           <hr class="my-4">
 

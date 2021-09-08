@@ -40,7 +40,8 @@ const validate = function (schema, data) {
         
         // if there is a validation function
         if (validator && typeof validator === 'function') {
-          if (!validator(value, setup[0] || setup)) {
+          // Validate data against schema
+          if (!validator(value, Array.isArray(setup) ? setup[0] : setup)) {
             const message = validate.getErrorMessage(type, kind, path, value, setup)
 
             response.valid = false,
@@ -72,7 +73,10 @@ validate.addFormat = function (name, re) {
 }
 
 validate.getErrorMessage = function (type, kind, path, value, setup) {
-  const message = setup[1] || messages[type][kind] || messages.general[kind] || messages.general.default
+  const message = Array.isArray(setup) && setup[1]
+    || messages[type][kind]
+    || messages.general[kind]
+    || messages.general.default
   return message
           .replace(/{PATH}/, path)
           .replace(/{VALUE}/, value)
