@@ -20,7 +20,8 @@ const Formulario = instance.parent.ctx
 
 Formulario.childRefs[fieldName] = error
 
-function changeValidation () {
+// Validate the input
+function validate () {
   const data = { [fieldName]: Formulario.data[fieldName] }
   const schema = {
     [fieldName]: Formulario.schema[fieldName]
@@ -45,7 +46,7 @@ function inputValidation () {
 </script>
 
 <template>
-  <div @change="changeValidation" @input="inputValidation" :class="{ 'input-error': error.message }">
+  <div @change="validate" @input="inputValidation" :class="{ 'input-error': error.message }">
     <slot />
     <div v-if="error.message" class="input-error-message">
       <small>{{error.message}}</small>

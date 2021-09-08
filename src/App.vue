@@ -58,9 +58,14 @@ const form = ref(createForm({
 
   async onSubmit () {
     console.log('Sending form...')
+    // throw new Error('Error message')
 
     // await a second to simulate a request
-    await new Promise(resolve => setTimeout(x=>resolve(1), 1000))
+    await new Promise(resolve => setTimeout(x => resolve(1), 1000))
+  },
+
+  catch (error) {
+    console.warn('>', error)
   }
 
 

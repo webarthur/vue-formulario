@@ -68,9 +68,11 @@ export default {
           await Form.onSubmit()
         }
         catch (e) {
-          Form.errorHandler(e)
+          if (typeof Form.catch === 'function') {
+            Form.catch(e)
+          }
+          console.error(e)
         }
-        Form.loading = false
       }
     }
 

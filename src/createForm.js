@@ -33,7 +33,7 @@ export default function (settings) {
 
     onSubmit () {},
 
-    errorHandler (e) {
+    catch (e) {
       console.error(e)
       alert(e)
     },
@@ -60,11 +60,6 @@ export default function (settings) {
       }
     
       // console.log('errors', errors)
-    },
-
-    errorHandler (err) {
-      console.error(err)
-      return void(0)
     },
 
     ...settings
