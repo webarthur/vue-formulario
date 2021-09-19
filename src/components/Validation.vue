@@ -11,17 +11,32 @@ const props = defineProps({
 
 const fieldName = props.for
 
-const instance = getCurrentInstance()
-if (!instance.parent.ctx.isFormulario) {
-  console.error(new Error('Parent is not a Formulario component'))
+let instance = getCurrentInstance().parent
+while (!instance.ctx.isFormulario && instance.parent) {
+  instance = instance.parent
 }
 
-const Formulario = instance.parent.ctx
 
-Formulario.childRefs[fieldName] = error
+  // const Formulario = instance.parent.ctx
+let Formulario
+if (!instance.ctx.isFormulario) {
+  console.error(new Error('Parent is not a Formulario component'))
+  Formulario = { data: {}, schema: {}, parentError: true }
+}
+else {
+  Formulario = instance.ctx
+  Formulario.childRefs[fieldName] = error
+}
+
+
 
 // Validate the input
 function validate () {
+  if (Formulario.parentError) {
+    console.error(new Error('Validation fail because Validation component has no Formulatio parent.'))
+    return
+  }
+  
   const data = { [fieldName]: Formulario.data[fieldName] }
   const schema = {
     [fieldName]: Formulario.schema[fieldName]
@@ -39,6 +54,11 @@ function validate () {
 
 // Validate on input when has an error
 function inputValidation () {
+  if (Formulario.parentError) {
+    console.error(new Error('Validation fail because Validation component has no Formulatio parent.'))
+    return
+  }
+
   if (error.value && error.value.message && !Array.isArray(Formulario.data[fieldName])) {
     validate()
   }
