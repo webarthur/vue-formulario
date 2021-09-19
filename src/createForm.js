@@ -52,7 +52,8 @@ export default function (settings) {
       for (const field of Object.keys(valid.errors)) {
         // childRefs[field].value = valid.errors[field]
         if (this.refs[field]) {
-          this.refs[field].value = valid.errors[field]
+          // this.refs[field].value = valid.errors[field]
+          this.refs[field] = valid.errors[field]
         }
       }
     },

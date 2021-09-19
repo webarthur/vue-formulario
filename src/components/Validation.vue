@@ -12,23 +12,19 @@ const props = defineProps({
 const fieldName = props.for
 
 let instance = getCurrentInstance().parent
-while (!instance.ctx.isFormulario && instance.parent) {
+while (!instance.props.isFormulario && instance.parent) {
   instance = instance.parent
 }
 
-
-  // const Formulario = instance.parent.ctx
 let Formulario
-if (!instance.ctx.isFormulario) {
+if (!instance.props.isFormulario) {
   console.error(new Error('Parent is not a Formulario component'))
   Formulario = { data: {}, schema: {}, parentError: true }
 }
 else {
-  Formulario = instance.ctx
+  Formulario = instance.props.modelValue
   Formulario.childRefs[fieldName] = error
 }
-
-
 
 // Validate the input
 function validate () {

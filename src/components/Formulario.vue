@@ -7,7 +7,10 @@ export default {
 
   props: {
     modelValue: Object,
-    isFormulario: Boolean,
+    isFormulario: {
+      type: Boolean,
+      default: true
+    },
   },
 
   setup (props, context) {
@@ -30,7 +33,6 @@ export default {
     const data = Form.data
     const schema = Form.schema
     const childRefs = props.modelValue.childRefs = {}
-    const isFormulario = true
 
     /**
      * Function to validate form
@@ -59,6 +61,7 @@ export default {
         }
         Form.valid = false
         childRefs[field].value = valid.errors[field]
+        // console.log(childRefs[field])
       }
 
       // Trigger onSubmit function to work with loading variable
@@ -85,7 +88,7 @@ export default {
     }
 
     return {
-      data, schema, childRefs, isFormulario, validateForm, dirtyForm
+      data, schema, childRefs, validateForm, dirtyForm
     }
   }
 
