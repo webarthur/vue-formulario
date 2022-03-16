@@ -11,6 +11,7 @@ const props = defineProps({
 
 const fieldName = props.for
 
+// Get <Formulario> component instance
 let instance = getCurrentInstance().parent
 while (!instance.props.isFormulario && instance.parent) {
   instance = instance.parent
@@ -32,29 +33,19 @@ function validate () {
     console.error(new Error('Validation fail because Validation component has no Formulatio parent.'))
     return
   }
-  
-  const data = { [fieldName]: Formulario.data[fieldName] }
-  const schema = {
-    [fieldName]: Formulario.schema[fieldName]
-  }
-  
-  const valid = validator(schema, data)
-
-  if (!valid.valid) {
-    error.value = valid.errors[fieldName]
-  }
-  else {
-    error.value = {}
-  }
+  const valid = validator(
+    { [fieldName]: Formulario.data[fieldName] },
+    { [fieldName]: Formulario.schema[fieldName] }
+  )
+  error.value = !valid.valid ? valid.errors[fieldName] : {}
 }
 
-// Validate on input when has an error
+// Validate input event when it has an error
 function inputValidation () {
   if (Formulario.parentError) {
     console.error(new Error('Validation fail because Validation component has no Formulatio parent.'))
     return
   }
-
   if (error.value && error.value.message && !Array.isArray(Formulario.data[fieldName])) {
     validate()
   }

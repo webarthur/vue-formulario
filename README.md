@@ -68,7 +68,7 @@ export default {
 
 ```vue
 <template>
-  <Formulario v-model="form" @submit.prevent="submitForm">
+  <Formulario v-model="form" @validated="submitForm" @error="errorHandler">
     <Validation for="firstName">
       <label>First name</label>
       <input v-model="form.data.firstName" type="text">

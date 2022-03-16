@@ -1,6 +1,4 @@
 <script>
-import { ref } from 'vue'
-import createForm from '../createForm'
 import validator from '../validator'
 
 export default {
@@ -14,24 +12,14 @@ export default {
   },
 
   setup (props, context) {
-    // FIX: this function is readonly
-    // if (context.attrs.onSubmit) {
-    //   const originalSubmit = context.attrs.onSubmit
-    //   context.attrs.onSubmit = async function (event, ...args) {
-    //     // Form.loading = true
-    //     // await originalSubmit(event)
-    //     // Form.loading = false
-    //   }
-    // }
+    const form = props.modelValue
 
-    const Form = props.modelValue
-
-    if (!Form) {
-      throw new Error('Formulario needs the v-model attribute')
+    if (!form) {
+      throw new Error('Formulario needs a v-model attribute')
     }
 
-    const data = Form.data
-    const schema = Form.schema
+    const data = form.data
+    const schema = form.schema
     const childRefs = props.modelValue.childRefs = {}
 
     /**
@@ -39,44 +27,39 @@ export default {
      * @param {object} e
      */
     async function validateForm (e) {
-      // Reset errors
-      // for (const field of Object.keys(schema)) {
-      //   // Check if the <Validation> component has created
-      //   if (!childRefs[field]) {
-      //     continue
-      //   }
-      //   childRefs[field].value = {}
-      // }
-
-      Form.valid = true
-      Form.resetErrors()
+      form.valid = true
+      form.resetErrors()
 
       const valid = validator(schema, data)
-
       // Add error message to the <Validation> component
       for (const field of Object.keys(valid.errors)) {
         // Check if the <Validation> component has created
         if (!childRefs[field]) {
+          console.warn('Formulario: There is no <Validation> component for ' + field)
           continue
         }
-        Form.valid = false
+        form.valid = false
         childRefs[field].value = valid.errors[field]
         // console.log(childRefs[field])
       }
 
       // Trigger onSubmit function to work with loading variable
-      if (Form.valid && Form.onSubmit) {
-        Form.loading = true
+      if (form.valid) {
+        form.loading = true
         try {
-          await Form.onSubmit()
+          if (typeof form.onSubmit === 'function') {
+            await form.onSubmit()
+          }
+          context.emit('validated', form)
         }
         catch (e) {
-          if (typeof Form.catch === 'function') {
-            Form.catch(e)
+          if (typeof form.catch === 'function') {
+            form.catch(e)
           }
+          context.emit('error', e, form)
           console.error(e)
         }
-        Form.loading = false
+        form.loading = false
       }
     }
 
@@ -84,7 +67,7 @@ export default {
      * Function to dirty form
      */
     function dirtyForm () {
-      Form.dirty = true
+      form.dirty = true
     }
 
     return {

@@ -53,23 +53,21 @@ const form = ref(createForm({
     },
     dynamicError: {
       type: 'string'
-    },
-  },
-
-  async onSubmit () {
-    console.log('Sending form...')
-    // throw new Error('Error message')
-
-    // await a second to simulate a request
-    await new Promise(resolve => setTimeout(x => resolve(1), 1000))
-  },
-
-  catch (error) {
-    console.warn('>', error)
+    }
   }
 
-
 }))
+
+async function submitForm () {
+  console.log('Sending form...')
+
+  // await a second to simulate a request
+  await new Promise(resolve => setTimeout(resolve, 1000))
+}
+
+function errorHandler () {
+  console.warn('>', error)
+}
 </script>
 
 <template>
@@ -80,7 +78,7 @@ const form = ref(createForm({
         <h1>Vue Formulario</h1>
         <p>Here you can test the validation with Formulario.</p>
 
-        <Formulario v-model="form">
+        <Formulario v-model="form" @validated="submitForm" @error="errorHandler">
 
           <div class="row g-3">
 
