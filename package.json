@@ -1,6 +1,7 @@
 {
   "name": "vue-formulario",
-  "version": "1.0.25",
+  "version": "1.0.26",
+  "homepage": "https://webarthur.github.io/vue-formulario/",
   "files": [
     "dist"
   ],
@@ -29,5 +30,6 @@
     "@vue/compiler-sfc": "^3.2.31",
     "vite": "^2.8.6"
   },
+  "license": "MIT",
   "author": "Arthur Ronconi <webarthur@gmail.com> (https://devarthur.com)"
 }
