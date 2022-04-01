@@ -2,67 +2,66 @@
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 import { ref } from 'vue'
-import { Formulario, Validation, createForm } from '../main'
+import { Formulario, Validation } from '../main'
 
-const form = ref(createForm({
+const form = ref({
+  firstName: '',
+  lastName: '',
+  username: '',
+  email: '',
+  country: '',
+  age: '',
+  profession: '',
+  knowledge: []
+})
 
-  data: {
-    firstName: '',
-    lastName: '',
-    username: '',
-    email: '',
-    country: '',
-    age: '',
-    profession: '',
-    knowledge: []
+const formSchema = {
+  firstName: {
+    type: 'string',
+    required: [true, 'Valid first name is required.']
   },
-
-  schema: {
-    firstName: {
-      type: 'string',
-      required: [true, 'Valid first name is required.']
-    },
-    lastName: {
-      type: 'string',
-      required: [true, 'Valid last name is required.']
-    },
-    username: {
-      type: 'string',
-      match: [/^[a-z\d]*$/, 'Type only characters and numbers '],
-      required: [true, 'Your username is required.']
-    },
-    email: {
-      type: 'string',
-      format: ['email', 'The email format is invalid.'],
-      required: [true, 'Your email is required.']
-    },
-    age: {
-      type: 'number',
-      min: [1, 'You need to be older'],
-      max: [120, 'You can\'t be that old.'],
-      required: [true, 'Your age is required.']
-    },
-    profession: {
-      type: 'string',
-      format: ['objectid', 'This option is invalid.'],
-      required: [true, 'Valid profession option is required.']
-    },
-    knowledge: {
-      type: 'array',
-      required: [true, 'Please, select at least one option.']
-    },
-    dynamicError: {
-      type: 'string'
-    }
+  lastName: {
+    type: 'string',
+    required: [true, 'Valid last name is required.']
+  },
+  username: {
+    type: 'string',
+    match: [/^[a-z\d]*$/, 'Type only characters and numbers '],
+    required: [true, 'Your username is required.']
+  },
+  email: {
+    type: 'string',
+    format: ['email', 'The email format is invalid.'],
+    required: [true, 'Your email is required.']
+  },
+  age: {
+    type: 'number',
+    min: [1, 'You need to be older'],
+    max: [120, 'You can\'t be that old.'],
+    required: [true, 'Your age is required.']
+  },
+  profession: {
+    type: 'string',
+    format: ['objectid', 'This option is invalid.'],
+    required: [true, 'Valid profession option is required.']
+  },
+  knowledge: {
+    type: 'array',
+    required: [true, 'Please, select at least one option.']
+  },
+  dynamicError: {
+    type: 'string'
   }
-
-}))
+}
 
 async function submitForm () {
   console.log('Sending form...')
 
   // await a second to simulate a request
-  await new Promise(resolve => setTimeout(resolve, 1000))
+  await new Promise(resolve => setTimeout(() => {
+    console.log('Ok')
+    resolve()
+  }, 1000))
 }
 
 function errorHandler () {
@@ -78,18 +77,18 @@ function errorHandler () {
         <h1>Vue Formulario</h1>
         <p>Here you can test the validation with Formulario.</p>
 
-        <Formulario v-model="form" @validated="submitForm" @error="errorHandler">
+        <Formulario ref="myForm" v-model="form" :schema="formSchema" @validated="submitForm" @error="errorHandler">
 
           <div class="row g-3">
 
             <Validation for="firstName" class="col-sm-6">
               <label for="firstName" class="form-label">First name</label>
-              <input v-model="form.data.firstName" type="text" class="form-control" id="firstName" placeholder="Arthur">
+              <input v-model="form.firstName" type="text" class="form-control" id="firstName" placeholder="Arthur">
             </Validation>
 
             <Validation for="lastName" class="col-sm-6">
               <label for="lastName" class="form-label">Last name</label>
-              <input v-model="form.data.lastName" type="text" class="form-control" id="lastName" placeholder="Ronconi">
+              <input v-model="form.lastName" type="text" class="form-control" id="lastName" placeholder="Ronconi">
               <div class="invalid-feedback">
                 Valid last name is required.
               </div>
@@ -99,13 +98,13 @@ function errorHandler () {
               <label for="username" class="form-label">Username</label>
               <div class="input-group has-validation">
                 <span class="input-group-text">@</span>
-                <input v-model="form.data.username" type="text" class="form-control" id="username" placeholder="webarthur">
+                <input v-model="form.username" type="text" class="form-control" id="username" placeholder="webarthur">
               </div>
             </Validation>
 
             <Validation for="email" class="col-12">
               <label for="email" class="form-label">Email <span class="text-muted">(Optional)</span></label>
-              <input v-model="form.data.email" type="email" class="form-control" id="email" placeholder="you@example.com">
+              <input v-model="form.email" type="email" class="form-control" id="email" placeholder="you@example.com">
               <div class="invalid-feedback">
                 Please enter a valid email address for shipping updates.
               </div>
@@ -113,7 +112,7 @@ function errorHandler () {
 
             <Validation for="profession" class="col-md-8">
               <label for="profession" class="form-label">Profession</label>
-              <select v-model="form.data.profession" class="form-select" id="profession">
+              <select v-model="form.profession" class="form-select" id="profession">
                 <option value="">Choose...</option>
                 <option value="61353fcc71337b5b94a209d6">Developer</option>
                 <option value="61353fdb4bdd98ce41eb5e59">Designer</option>
@@ -128,7 +127,7 @@ function errorHandler () {
 
             <Validation for="age" class="col-md-4">
               <label for="age" class="form-label">Age</label>
-              <input v-model.number="form.data.age" type="number" class="form-control" id="age" placeholder="">
+              <input v-model.number="form.age" type="number" class="form-control" id="age" placeholder="">
               <div class="invalid-feedback">
                 Age code required.
               </div>
@@ -142,36 +141,36 @@ function errorHandler () {
 
             <div class="col-md-4">
               <div class="form-check">
-                <input v-model="form.data.knowledge" value="HTML" type="checkbox" class="form-check-input" id="HTML">
+                <input v-model="form.knowledge" value="HTML" type="checkbox" class="form-check-input" id="HTML">
                 <label class="form-check-label" for="HTML">HTML</label>
               </div>
 
               <div class="form-check">
-                <input v-model="form.data.knowledge" value="CSS" type="checkbox" class="form-check-input" id="CSS">
+                <input v-model="form.knowledge" value="CSS" type="checkbox" class="form-check-input" id="CSS">
                 <label class="form-check-label" for="CSS">CSS</label>
               </div>
             </div>
 
             <div class="col-md-4">
               <div class="form-check">
-                <input v-model="form.data.knowledge" value="JavaScript" type="checkbox" class="form-check-input" id="JavaScript">
+                <input v-model="form.knowledge" value="JavaScript" type="checkbox" class="form-check-input" id="JavaScript">
                 <label class="form-check-label" for="JavaScript">JavaScript</label>
               </div>
 
               <div class="form-check">
-                <input v-model="form.data.knowledge" value="Vue" type="checkbox" class="form-check-input" id="Vue">
+                <input v-model="form.knowledge" value="Vue" type="checkbox" class="form-check-input" id="Vue">
                 <label class="form-check-label" for="Vue">Vue</label>
               </div>
             </div>
 
             <div class="col-md-4">
               <div class="form-check">
-                <input v-model="form.data.knowledge" value="Bootstrap" type="checkbox" class="form-check-input" id="Bootstrap">
+                <input v-model="form.knowledge" value="Bootstrap" type="checkbox" class="form-check-input" id="Bootstrap">
                 <label class="form-check-label" for="Bootstrap">Bootstrap</label>
               </div>
 
               <!-- <div class="form-check">
-                <input v-model="form.data.knowledge" value="CSS" type="checkbox" class="form-check-input" id="CSS">
+                <input v-model="form.knowledge" value="CSS" type="checkbox" class="form-check-input" id="CSS">
                 <label class="form-check-label" for="CSS">CSS</label>
               </div> -->
             </div>
@@ -234,9 +233,9 @@ function errorHandler () {
 
           <hr class="my-4">
 
-          <button class="w-100 btn btn-primary btn-lg" type="submit" :disabled="form.loading">Submit</button>
+          <button class="w-100 btn btn-primary btn-lg" type="submit" :disabled="$refs.myForm && $refs.myForm.loading">Submit</button>
 
-          <p v-if="form.loading" class="mt-3 text-center">Sending...</p>
+          <p v-if="$refs.myForm && $refs.myForm.loading" class="mt-3 text-center">Sending...</p>
 
           <hr class="my-4">
 

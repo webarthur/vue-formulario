@@ -22,27 +22,25 @@ $ npm install vue-formulario
 <script src="https://unpkg.com/vue"></script>
 <script src="https://unpkg.com/vue-formulario"></script>
 <script>
-  const { Formulario, Validation, createForm } = VueFormulario
+  const { Formulario, Validation } = VueFormulario
   const app = Vue.createApp({
     data () {
       return {
-        form: createForm({
-          data: {
-            name: '',
-            email: ''
+        form: {
+          name: '',
+          email: ''
+        },
+        schema: {
+          name: {
+            type: String,
+            required: true
           },
-          schema: {
-            name: {
-              type: String,
-              required: true
-            },
-            email: {
-              type: String,
-              format: 'email',
-              required: [true, 'Custom error message']
-            }
+          email: {
+            type: String,
+            format: 'email',
+            required: [true, 'Custom error message']
           }
-        })
+        }
       }
     }
   })
@@ -68,24 +66,24 @@ export default {
 
 ```vue
 <template>
-  <Formulario v-model="form" @validated="submitForm" @error="errorHandler">
+  <Formulario v-model="form" :schema="schema" @validated="submitForm" @error="errorHandler">
     <Validation for="firstName">
       <label>First name</label>
-      <input v-model="form.data.firstName" type="text">
+      <input v-model="form.firstName" type="text">
     </Validation>
     <Validation for="lastName">
       <label>Last name</label>
-      <input v-model="form.data.lastName" type="text">
+      <input v-model="form.lastName" type="text">
     </Validation>
     <Validation for="email">
       <label>Email</label>
-      <input v-model="form.data.email" type="text">
+      <input v-model="form.email" type="text">
     </Validation>
   </Formulario>
 </template>
 
 <script>
-import { Formulario, Validation, createForm } from 'vue-formulario'
+import { Formulario, Validation } from 'vue-formulario'
 
 export default {
 
@@ -98,27 +96,25 @@ export default {
 
   data () {
     return {
-      form: createForm({
-        data: {
-          firstName: '',
-          lastName: '',
-          email: ''
+      form: {
+        firstName: '',
+        lastName: '',
+        email: ''
+      },
+      schema: {
+        firstName: {
+          type: String,
+          required: true
         },
-        schema: {
-          firstName: {
-            type: String,
-            required: true
-          },
-          lastName: {
-            type: String
-            required: [true, 'Custom error message']
-          },
-          email: {
-            type: String,
-            format: 'email'
-          }
+        lastName: {
+          type: String
+          required: [true, 'Custom error message']
+        },
+        email: {
+          type: String,
+          format: 'email'
         }
-      })
+      }
     }
   }
 
