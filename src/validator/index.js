@@ -98,9 +98,9 @@ validate.types = {
     test: (type) => type === String || typeof type === 'string' && type.toLowerCase() === 'string',
     keywords: {
       required: v => (v instanceof String || typeof v === 'string') && v.length,
-      type: (v, value) => (v instanceof String || typeof v === 'string' || typeof v === 'undefined'),
-      maxlength: (v, value) => v === null || v.length <= value,
-      minlength: (v, value) => v === null || v.length >= value,
+      type: v => (v instanceof String || typeof v === 'string' || typeof v === 'undefined'),
+      maxlength: (v, value) => v === null || v === undefined || v.length <= value,
+      minlength: (v, value) => v === null || v === undefined || v.length >= value,
       match: (v, re) => !re || ((v != null && v !== '') ? re.test(v) : true),
       enum: (v, value) => undefined === v || ~value.indexOf(v),
       format: (v, format) => !format || !formats[format] || ((v != null && v !== '') ? formats[format].test(v) : true),

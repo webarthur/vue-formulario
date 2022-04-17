@@ -21,7 +21,7 @@ if (!Formulario.props.isFormulario) {
   throw new Error('Validation needs a Formulario component as parent')
 }
 else {
-  console.log('Formulario', Formulario)
+  // console.log('Formulario', Formulario)
   Formulario.ctx.childRefs[fieldName] = error
 }
 
