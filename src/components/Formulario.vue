@@ -1,5 +1,4 @@
 <script>
-import { reactive } from 'vue'
 import validator from '../validator'
 
 export default {

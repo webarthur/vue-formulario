@@ -32,6 +32,7 @@ const formSchema = {
   email: {
     type: 'string',
     format: ['email', 'The email format is invalid.'],
+    trim: true,
     required: [true, 'Your email is required.']
   },
   age: {
@@ -104,7 +105,7 @@ function errorHandler () {
 
             <Validation for="email" class="col-12">
               <label for="email" class="form-label">Email <span class="text-muted">(Optional)</span></label>
-              <input v-model="form.email" type="email" class="form-control" id="email" placeholder="you@example.com">
+              <input v-model="form.email" type="text" class="form-control" id="email" placeholder="you@example.com">
               <div class="invalid-feedback">
                 Please enter a valid email address for shipping updates.
               </div>

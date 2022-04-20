@@ -24,8 +24,7 @@ const validate = function (schema, data) {
       continue
     }
 
-    const type = validate.getType(schema[path].type)
-    const value = data[path]
+    const type = validate.getType(schema[path].type, path)
 
     if (type) {
       // For each key of schema entry
@@ -36,7 +35,15 @@ const validate = function (schema, data) {
         // Get keyword validator
         const validator = validate.types[type].keywords[kind]
         
-        // if there is a validation function
+        // Executes trim()
+        if (type === 'String' && setup.trim && data[path]) {
+          data[path] = data[path].trim()
+        }
+        
+        // Get path value from data object
+        const value = data[path]
+
+        // When there is a validation function
         if (validator && typeof validator === 'function') {
           // Validate data against schema
           if (!validator(value, Array.isArray(setup) ? setup[0] : setup)) {
@@ -81,15 +88,14 @@ validate.getErrorMessage = function (type, kind, path, value, setup) {
 }
 
 // Find the type
-validate.getType = function (type) {
+validate.getType = function (type, path) {
   for (const typeName of Object.keys(validate.types)) {
     if (validate.types[typeName].test && validate.types[typeName].test(type)) {
       return typeName
     }
-    else {
-      // add error: type not found
-    }
   }
+  // Throw a warning: type not found
+  console.warn('Validation: type "' + type + '" not found for "' + path + '"')
 }
 
 validate.types = {
@@ -97,6 +103,7 @@ validate.types = {
   String: {
     test: (type) => type === String || typeof type === 'string' && type.toLowerCase() === 'string',
     keywords: {
+      trim: () => true, // just to avoid throw an error
       required: v => (v instanceof String || typeof v === 'string') && v.length,
       type: v => (v instanceof String || typeof v === 'string' || typeof v === 'undefined'),
       maxlength: (v, value) => v === null || v === undefined || v.length <= value,
