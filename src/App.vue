@@ -242,7 +242,7 @@ function errorHandler () {
           <hr class="my-4">
 
           <Validation for="dynamicError">
-            <button @click="form.addError('dynamicError', 'Show message error!')" class="w-100 btn btn-secondary btn-lg" type="button">Add dynamic error message</button>
+            <button @click="this.$refs.myForm.addError('dynamicError', 'Show message error!')" class="w-100 btn btn-secondary btn-lg" type="button">Add dynamic error message</button>
           </Validation>
 
         </Formulario>

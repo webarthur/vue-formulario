@@ -58,7 +58,7 @@ export default {
       },
 
       addError (path, message) {
-        this.childRefs[path] = {
+        this.childRefs[path].value = {
           message,
           path,
           kind: 'custom'
