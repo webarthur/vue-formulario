@@ -18,7 +18,8 @@ const form = ref({
 const formSchema = {
   firstName: {
     type: 'string',
-    required: [true, 'Valid first name is required.']
+    required: [true, 'Valid first name is required.'],
+    validate: [v => v === 'Luke', 'I am not your father!']
   },
   lastName: {
     type: 'string',

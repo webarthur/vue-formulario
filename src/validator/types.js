@@ -1,5 +1,7 @@
 import formats from './formats'
 
+const validate = (v, validator) => validator(v)
+
 // From: https://github.com/ajv-validator/ajv-formats/blob/master/src/formats.ts
 export default {
 
@@ -14,6 +16,7 @@ export default {
       match: (v, re) => !re || ((v != null && v !== '') ? re.test(v) : true),
       enum: (v, value) => undefined === v || ~value.indexOf(v),
       format: (v, format) => !format || !formats[format] || ((v != null && v !== '') ? formats[format].test(v) : true),
+      validate
     },
   },
 
@@ -24,6 +27,7 @@ export default {
       min: (v, value) => v === null || v >= value,
       max: (v, value) => v === null || v <= value,
       enum: (v, value) => undefined === v || ~value.indexOf(v),
+      validate
     }
   },
 
@@ -33,6 +37,7 @@ export default {
       required: v => (v instanceof Array || Array.isArray(v)) && v.length > 0,
       // min: (v, value) => v === null || v >= value,
       // max: (v, value) => v === null || v <= value,
+      validate
     }
   },
 
@@ -42,6 +47,7 @@ export default {
       required: v => (v instanceof Date),
       // min: (v, value) => v === null || v >= value,
       // max: (v, value) => v === null || v <= value,
+      validate
     }
   },
 
