@@ -23,12 +23,12 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.2.31"
+    "vue": "^3.2.33"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^2.2.4",
-    "@vue/compiler-sfc": "^3.2.31",
-    "vite": "^2.8.6"
+    "@vitejs/plugin-vue": "^2.3.1",
+    "@vue/compiler-sfc": "^3.2.33",
+    "vite": "^2.9.5"
   },
   "license": "MIT",
   "author": "Arthur Ronconi <webarthur@gmail.com> (https://devarthur.com)"
