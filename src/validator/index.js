@@ -21,7 +21,7 @@ const validate = function (schema, data) {
   // For each schema key
   for (const path of Object.keys(schema)) {
 
-    if (!schema[path]) {
+    if (!schema[path] || !schema[path].type) {
       continue
     }
 
