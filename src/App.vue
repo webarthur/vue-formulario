@@ -31,7 +31,7 @@ const formSchema = {
     required: [true, 'Your username is required.']
   },
   email: {
-    type: 'string',
+    type: String,
     format: ['email', 'The email format is invalid.'],
     trim: true,
     required: [true, 'Your email is required.']

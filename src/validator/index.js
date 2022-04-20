@@ -37,7 +37,7 @@ const validate = function (schema, data) {
         const validator = validate.types[type].keywords[kind]
         
         // Executes trim()
-        if (type === 'String' && setup.trim && data[path]) {
+        if (type === 'String' && schema[path].trim && data[path]) {
           data[path] = data[path].trim()
         }
         
