@@ -18,11 +18,15 @@ while (!Formulario.props.isFormulario && Formulario.parent) {
 }
 
 if (!Formulario.props.isFormulario) {
-  throw new Error('Validation needs a Formulario component as parent')
+  throw new Error('Validation needs a Formulario component as parent.')
 }
 else {
-  // console.log('Formulario', Formulario)
-  Formulario.ctx.childRefs[fieldName] = error
+  if (!Formulario.exposed.childRefs) {
+    throw new Error('Validation component: missing childRefs from exposed.')
+  }
+  else {
+    Formulario.exposed.childRefs[fieldName] = error
+  }
 }
 
 // Validate the input
@@ -32,8 +36,8 @@ function validate () {
     return
   }
   const valid = validator(
-    { [fieldName]: Formulario.ctx.data[fieldName] },
-    { [fieldName]: Formulario.ctx.schema[fieldName] }
+    { [fieldName]: Formulario.exposed.data[fieldName] },
+    { [fieldName]: Formulario.exposed.schema[fieldName] }
   )
   error.value = !valid.valid ? valid.errors[fieldName] : {}
 }

@@ -18,7 +18,7 @@ export default {
     schema: {
       type: Object,
       default: {}
-    }
+    },
 
   },
 
@@ -129,6 +129,8 @@ export default {
       }
 
     }
+
+    context.expose(form)
 
     return form
   }
