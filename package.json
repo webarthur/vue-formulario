@@ -1,6 +1,6 @@
 {
   "name": "vue-formulario",
-  "version": "1.1.14",
+  "version": "1.2.0",
   "homepage": "https://webarthur.github.io/vue-formulario/",
   "files": [
     "dist"
@@ -20,15 +20,17 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "test": "vitest"
   },
   "dependencies": {
-    "vue": "^3.2.33"
+    "vue": "^3.2.47"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^2.3.1",
-    "@vue/compiler-sfc": "^3.2.33",
-    "vite": "^2.9.5"
+    "@vitejs/plugin-vue": "^4.0.0",
+    "@vue/compiler-sfc": "^3.2.47",
+    "vite": "^4.1.4",
+    "vitest": "^0.28.5"
   },
   "license": "MIT",
   "author": "Arthur Ronconi <webarthur@gmail.com> (https://devarthur.com)"
