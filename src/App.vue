@@ -4,6 +4,8 @@
 import { ref } from 'vue'
 import { Formulario, Validation } from '../main'
 
+const myForm = ref({})
+
 const form = ref({
   firstName: '',
   lastName: '',
@@ -19,7 +21,7 @@ const formSchema = {
   firstName: {
     type: 'string',
     required: [true, 'Valid first name is required.'],
-    validate: [v => v === 'Luke', 'I am not your father!']
+    validate: [v => !(v === 'Luke'), 'I am not your father!']
   },
   lastName: {
     type: 'string',
@@ -56,12 +58,13 @@ const formSchema = {
   }
 }
 
+
 async function submitForm () {
   console.log('Sending form...')
 
-  // await a second to simulate a request
+  // Simulate a request with await/promise
   await new Promise(resolve => setTimeout(() => {
-    console.log('Ok')
+    console.log('Done!')
     resolve()
   }, 1000))
 }
@@ -235,9 +238,13 @@ function errorHandler () {
 
           <hr class="my-4">
 
-          <button class="w-100 btn btn-primary btn-lg" type="submit" :disabled="$refs.myForm && $refs.myForm.loading">Submit</button>
+          <button class="w-100 btn btn-primary btn-lg" type="submit" :disabled="myForm.loading">Submit</button>
 
-          <p v-if="$refs.myForm && $refs.myForm.loading" class="mt-3 text-center">Sending...</p>
+          <p v-if="myForm.loading" class="mt-3 text-center">Sending...</p>
+
+          <!-- {{ $refs.myForm && $refs.myForm.loading || 'nothing' }} -->
+
+          <!-- {{ myForm || 'nothing' }} -->
 
           <hr class="my-4">
 
